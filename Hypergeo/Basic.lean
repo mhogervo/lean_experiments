@@ -13,6 +13,7 @@ Mathlib, with a focus on the Gauss hypergeometric function `₂F₁` (`ordinaryH
 
 ## Contents
 
+* `ordinaryHypergeometric_symm` — `₂F₁` is symmetric in its first two parameters `a`, `b`.
 * `Hypergeo.Deriv` — the parameter-shift derivative identity
   `d/dx ₂F₁(a,b;c;x) = (ab/c) · ₂F₁(a+1,b+1;c+1;x)`, valid inside the unit disk of convergence.
 
@@ -23,3 +24,13 @@ The starting point is `Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric`
 radius of convergence, and treats the terminating (polynomial) cases. Related material lives under
 `Mathlib.Analysis.SpecialFunctions` (`Gamma`, `Beta`, `Pochhammer`).
 -/
+
+variable {𝕂 : Type*} {𝔸 : Type*} [Field 𝕂] [Ring 𝔸] [Algebra 𝕂 𝔸] [TopologicalSpace 𝔸]
+  [IsTopologicalRing 𝔸]
+
+/-- `₂F₁` is symmetric in its first two parameters: `₂F₁(a,b;c;x) = ₂F₁(b,a;c;x)`. This is
+immediate from the symmetry of the underlying series, `ordinaryHypergeometricSeries_symm`. -/
+theorem ordinaryHypergeometric_symm (a b c : 𝕂) (x : 𝔸) :
+    ₂F₁ a b c x = ₂F₁ b a c x := by
+  unfold ordinaryHypergeometric
+  rw [ordinaryHypergeometricSeries_symm]
